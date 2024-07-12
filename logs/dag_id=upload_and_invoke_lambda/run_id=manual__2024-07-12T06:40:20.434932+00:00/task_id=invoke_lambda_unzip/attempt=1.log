@@ -1,0 +1,48 @@
+[2024-07-12T06:40:27.907+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-12T06:40:27.923+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_and_invoke_lambda.invoke_lambda_unzip manual__2024-07-12T06:40:20.434932+00:00 [queued]>
+[2024-07-12T06:40:27.932+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_and_invoke_lambda.invoke_lambda_unzip manual__2024-07-12T06:40:20.434932+00:00 [queued]>
+[2024-07-12T06:40:27.932+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-07-12T06:40:27.944+0000] {taskinstance.py:2330} INFO - Executing <Task(LambdaInvokeFunctionOperator): invoke_lambda_unzip> on 2024-07-12 06:40:20.434932+00:00
+[2024-07-12T06:40:27.949+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1424) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-12T06:40:27.950+0000] {standard_task_runner.py:63} INFO - Started process 1425 to run task
+[2024-07-12T06:40:27.950+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'upload_and_invoke_lambda', 'invoke_lambda_unzip', 'manual__2024-07-12T06:40:20.434932+00:00', '--job-id', '190', '--raw', '--subdir', 'DAGS_FOLDER/stream_upload_to_s3.py', '--cfg-path', '/tmp/tmpeip_jyz5']
+[2024-07-12T06:40:27.951+0000] {standard_task_runner.py:91} INFO - Job 190: Subtask invoke_lambda_unzip
+[2024-07-12T06:40:27.986+0000] {task_command.py:426} INFO - Running <TaskInstance: upload_and_invoke_lambda.invoke_lambda_unzip manual__2024-07-12T06:40:20.434932+00:00 [running]> on host 318b387ee83d
+[2024-07-12T06:40:28.076+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_and_invoke_lambda' AIRFLOW_CTX_TASK_ID='invoke_lambda_unzip' AIRFLOW_CTX_EXECUTION_DATE='2024-07-12T06:40:20.434932+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-07-12T06:40:20.434932+00:00'
+[2024-07-12T06:40:28.077+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-12T06:40:28.089+0000] {lambda_function.py:217} INFO - Invoking AWS Lambda function: YourLambdaFunctionName with payload: ipl_matches.zip
+[2024-07-12T06:40:28.097+0000] {base.py:84} INFO - Using connection ID 's3-bucket-conn' for task execution.
+[2024-07-12T06:40:28.098+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='s3-bucket-conn', conn_type='aws') credentials retrieved from login and password.
+[2024-07-12T06:40:28.665+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-12T06:40:28.666+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/operators/lambda_function.py", line 218, in execute
+    response = self.hook.invoke_lambda(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/lambda_function.py", line 83, in invoke_lambda
+    return self.conn.invoke(**trim_none_values(invoke_args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 565, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 1021, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.errorfactory.InvalidRequestContentException: An error occurred (InvalidRequestContentException) when calling the Invoke operation: Could not parse request body into json: Could not parse payload into json: Unrecognized token 'ipl_matches': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: (byte[])"ipl_matches.zip"; line: 1, column: 13]
+[2024-07-12T06:40:28.676+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_and_invoke_lambda, task_id=invoke_lambda_unzip, run_id=manual__2024-07-12T06:40:20.434932+00:00, execution_date=20240712T064020, start_date=20240712T064027, end_date=20240712T064028
+[2024-07-12T06:40:28.688+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 190 for task invoke_lambda_unzip (An error occurred (InvalidRequestContentException) when calling the Invoke operation: Could not parse request body into json: Could not parse payload into json: Unrecognized token 'ipl_matches': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: (byte[])"ipl_matches.zip"; line: 1, column: 13]; 1425)
+[2024-07-12T06:40:28.726+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-12T06:40:28.738+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-12T06:40:28.740+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

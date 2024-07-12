@@ -1,0 +1,70 @@
+[2024-07-12T03:38:48.337+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-12T03:38:48.355+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: download_and_unzip_files.upload_zip_to_s3 scheduled__2024-07-11T00:00:00+00:00 [queued]>
+[2024-07-12T03:38:48.370+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: download_and_unzip_files.upload_zip_to_s3 scheduled__2024-07-11T00:00:00+00:00 [queued]>
+[2024-07-12T03:38:48.371+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 6
+[2024-07-12T03:38:48.393+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): upload_zip_to_s3> on 2024-07-11 00:00:00+00:00
+[2024-07-12T03:38:48.398+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=307) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-12T03:38:48.399+0000] {standard_task_runner.py:63} INFO - Started process 308 to run task
+[2024-07-12T03:38:48.399+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'download_and_unzip_files', 'upload_zip_to_s3', 'scheduled__2024-07-11T00:00:00+00:00', '--job-id', '108', '--raw', '--subdir', 'DAGS_FOLDER/download_extract_dag.py', '--cfg-path', '/tmp/tmpc4udsley']
+[2024-07-12T03:38:48.400+0000] {standard_task_runner.py:91} INFO - Job 108: Subtask upload_zip_to_s3
+[2024-07-12T03:38:48.436+0000] {task_command.py:426} INFO - Running <TaskInstance: download_and_unzip_files.upload_zip_to_s3 scheduled__2024-07-11T00:00:00+00:00 [running]> on host 4292072e8878
+[2024-07-12T03:38:48.514+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='download_and_unzip_files' AIRFLOW_CTX_TASK_ID='upload_zip_to_s3' AIRFLOW_CTX_EXECUTION_DATE='2024-07-11T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-07-11T00:00:00+00:00'
+[2024-07-12T03:38:48.515+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-12T03:38:48.534+0000] {base.py:84} INFO - Using connection ID 's3-bucket-conn' for task execution.
+[2024-07-12T03:38:48.535+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='s3-bucket-conn', conn_type='aws') credentials retrieved from login and password.
+[2024-07-12T03:38:49.117+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-12T03:38:49.117+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/download_extract_dag.py", line 19, in upload_to_s3
+    s3_hook.load_file(local_path, key=s3_key, bucket_name=bucket_name, replace=True)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/s3.py", line 135, in wrapper
+    return func(*bound_args.args, **bound_args.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/s3.py", line 89, in wrapper
+    return func(*bound_args.args, **bound_args.kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/s3.py", line 1098, in load_file
+    client.upload_file(filename, bucket_name, key, ExtraArgs=extra_args, Config=self.transfer_config)
+  File "/home/airflow/.local/lib/python3.12/site-packages/boto3/s3/inject.py", line 145, in upload_file
+    return transfer.upload_file(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/boto3/s3/transfer.py", line 371, in upload_file
+    future.result()
+  File "/home/airflow/.local/lib/python3.12/site-packages/s3transfer/futures.py", line 103, in result
+    return self._coordinator.result()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/s3transfer/futures.py", line 266, in result
+    raise self._exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/s3transfer/tasks.py", line 269, in _main
+    self._submit(transfer_future=transfer_future, **kwargs)
+  File "/home/airflow/.local/lib/python3.12/site-packages/s3transfer/upload.py", line 591, in _submit
+    upload_input_manager.provide_transfer_size(transfer_future)
+  File "/home/airflow/.local/lib/python3.12/site-packages/s3transfer/upload.py", line 244, in provide_transfer_size
+    self._osutil.get_file_size(transfer_future.meta.call_args.fileobj)
+  File "/home/airflow/.local/lib/python3.12/site-packages/s3transfer/utils.py", line 256, in get_file_size
+    return os.path.getsize(filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen genericpath>", line 62, in getsize
+FileNotFoundError: [Errno 2] No such file or directory: 'None'
+[2024-07-12T03:38:49.127+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=download_and_unzip_files, task_id=upload_zip_to_s3, run_id=scheduled__2024-07-11T00:00:00+00:00, execution_date=20240711T000000, start_date=20240712T033848, end_date=20240712T033849
+[2024-07-12T03:38:49.139+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 108 for task upload_zip_to_s3 ([Errno 2] No such file or directory: 'None'; 308)
+[2024-07-12T03:38:49.174+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-12T03:38:49.187+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-12T03:38:49.189+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
