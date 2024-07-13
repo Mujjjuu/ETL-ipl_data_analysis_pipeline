@@ -1,0 +1,23 @@
+[2024-07-12T22:02:46.643+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-12T22:02:46.658+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_and_invoke_lambda.download_and_upload_to_s3 manual__2024-07-12T22:02:45.537691+00:00 [queued]>
+[2024-07-12T22:02:46.666+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_and_invoke_lambda.download_and_upload_to_s3 manual__2024-07-12T22:02:45.537691+00:00 [queued]>
+[2024-07-12T22:02:46.667+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-07-12T22:02:46.680+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): download_and_upload_to_s3> on 2024-07-12 22:02:45.537691+00:00
+[2024-07-12T22:02:46.685+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1873) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-12T22:02:46.686+0000] {standard_task_runner.py:63} INFO - Started process 1874 to run task
+[2024-07-12T22:02:46.686+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'upload_and_invoke_lambda', 'download_and_upload_to_s3', 'manual__2024-07-12T22:02:45.537691+00:00', '--job-id', '228', '--raw', '--subdir', 'DAGS_FOLDER/stream_upload_to_s3.py', '--cfg-path', '/tmp/tmpfr35eggt']
+[2024-07-12T22:02:46.687+0000] {standard_task_runner.py:91} INFO - Job 228: Subtask download_and_upload_to_s3
+[2024-07-12T22:02:46.724+0000] {task_command.py:426} INFO - Running <TaskInstance: upload_and_invoke_lambda.download_and_upload_to_s3 manual__2024-07-12T22:02:45.537691+00:00 [running]> on host e900ffca6a6f
+[2024-07-12T22:02:46.807+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_and_invoke_lambda' AIRFLOW_CTX_TASK_ID='download_and_upload_to_s3' AIRFLOW_CTX_EXECUTION_DATE='2024-07-12T22:02:45.537691+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-07-12T22:02:45.537691+00:00'
+[2024-07-12T22:02:46.808+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-12T22:02:46.831+0000] {base.py:84} INFO - Using connection ID 's3-bucket-conn' for task execution.
+[2024-07-12T22:02:46.832+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='s3-bucket-conn', conn_type='aws') credentials retrieved from login and password.
+[2024-07-12T22:02:50.329+0000] {stream_upload_to_s3.py:45} INFO - Streamed file from https://cricsheet.org/downloads/ipl_json.zip to s3://ipl-data-analysis-zipfile/ipl_matches.zip
+[2024-07-12T22:02:50.351+0000] {python.py:237} INFO - Done. Returned value was: None
+[2024-07-12T22:02:50.352+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-12T22:02:50.370+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=upload_and_invoke_lambda, task_id=download_and_upload_to_s3, run_id=manual__2024-07-12T22:02:45.537691+00:00, execution_date=20240712T220245, start_date=20240712T220246, end_date=20240712T220250
+[2024-07-12T22:02:50.393+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-07-12T22:02:50.420+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-07-12T22:02:50.422+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

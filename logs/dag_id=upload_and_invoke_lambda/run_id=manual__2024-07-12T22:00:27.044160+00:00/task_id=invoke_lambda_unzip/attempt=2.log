@@ -1,0 +1,24 @@
+[2024-07-12T22:05:37.547+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-12T22:05:37.563+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_and_invoke_lambda.invoke_lambda_unzip manual__2024-07-12T22:00:27.044160+00:00 [queued]>
+[2024-07-12T22:05:37.571+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_and_invoke_lambda.invoke_lambda_unzip manual__2024-07-12T22:00:27.044160+00:00 [queued]>
+[2024-07-12T22:05:37.572+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-07-12T22:05:37.585+0000] {taskinstance.py:2330} INFO - Executing <Task(LambdaInvokeFunctionOperator): invoke_lambda_unzip> on 2024-07-12 22:00:27.044160+00:00
+[2024-07-12T22:05:37.590+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1924) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-12T22:05:37.591+0000] {standard_task_runner.py:63} INFO - Started process 1925 to run task
+[2024-07-12T22:05:37.591+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'upload_and_invoke_lambda', 'invoke_lambda_unzip', 'manual__2024-07-12T22:00:27.044160+00:00', '--job-id', '234', '--raw', '--subdir', 'DAGS_FOLDER/stream_upload_to_s3.py', '--cfg-path', '/tmp/tmpchdk92rk']
+[2024-07-12T22:05:37.592+0000] {standard_task_runner.py:91} INFO - Job 234: Subtask invoke_lambda_unzip
+[2024-07-12T22:05:37.629+0000] {task_command.py:426} INFO - Running <TaskInstance: upload_and_invoke_lambda.invoke_lambda_unzip manual__2024-07-12T22:00:27.044160+00:00 [running]> on host e900ffca6a6f
+[2024-07-12T22:05:37.708+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_and_invoke_lambda' AIRFLOW_CTX_TASK_ID='invoke_lambda_unzip' AIRFLOW_CTX_EXECUTION_DATE='2024-07-12T22:00:27.044160+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-07-12T22:00:27.044160+00:00'
+[2024-07-12T22:05:37.710+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-12T22:05:37.721+0000] {lambda_function.py:217} INFO - Invoking AWS Lambda function: ***-lamda-unzip with payload: {"s3_key": "ipl_matches.zip"}
+[2024-07-12T22:05:37.729+0000] {base.py:84} INFO - Using connection ID 's3-bucket-conn' for task execution.
+[2024-07-12T22:05:37.731+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='s3-bucket-conn', conn_type='aws') credentials retrieved from login and password.
+[2024-07-12T22:06:37.590+0000] {lambda_function.py:226} INFO - Lambda response metadata: {'RequestId': '2c3642be-32b2-43fc-bcc5-38ea1b988d2e', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Fri, 12 Jul 2024 22:06:38 GMT', 'content-type': 'application/json', 'content-length': '71', 'connection': 'keep-alive', 'x-amzn-requestid': '2c3642be-32b2-43fc-bcc5-38ea1b988d2e', 'x-amzn-remapped-content-length': '0', 'x-amz-executed-version': '$LATEST', 'x-amzn-trace-id': 'root=1-6691a8b3-57e838085b37b6394680de73;parent=765adf5de185cef8;sampled=0;lineage=101f7269:0'}, 'RetryAttempts': 0}
+[2024-07-12T22:06:37.591+0000] {lambda_function.py:250} INFO - Lambda function invocation succeeded: {'RequestId': '2c3642be-32b2-43fc-bcc5-38ea1b988d2e', 'HTTPStatusCode': 200, 'HTTPHeaders': {'date': 'Fri, 12 Jul 2024 22:06:38 GMT', 'content-type': 'application/json', 'content-length': '71', 'connection': 'keep-alive', 'x-amzn-requestid': '2c3642be-32b2-43fc-bcc5-38ea1b988d2e', 'x-amzn-remapped-content-length': '0', 'x-amz-executed-version': '$LATEST', 'x-amzn-trace-id': 'root=1-6691a8b3-57e838085b37b6394680de73;parent=765adf5de185cef8;sampled=0;lineage=101f7269:0'}, 'RetryAttempts': 0}
+[2024-07-12T22:06:37.591+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-12T22:06:37.610+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=upload_and_invoke_lambda, task_id=invoke_lambda_unzip, run_id=manual__2024-07-12T22:00:27.044160+00:00, execution_date=20240712T220027, start_date=20240712T220537, end_date=20240712T220637
+[2024-07-12T22:06:37.637+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-07-12T22:06:37.650+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-12T22:06:37.652+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
