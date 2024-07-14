@@ -1,5 +1,13 @@
+# Ignore virtual environment
 myenv/
-.env/
-.logs/
-__pycache__/
 
+# Ignore environment variables
+.env/
+
+# Ignore logs
+.logs/
+
+# Ignore Python cache files
+dags/__pycache__/
+
+logs/scheduler/latest/
