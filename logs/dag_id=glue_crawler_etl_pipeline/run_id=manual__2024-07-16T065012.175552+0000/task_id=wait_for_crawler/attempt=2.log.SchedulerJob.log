@@ -1,0 +1,1 @@
+[2024-07-16T06:58:31.957+0000] {scheduler_job_runner.py:769} ERROR - Executor reports task instance <TaskInstance: glue_crawler_etl_pipeline.wait_for_crawler manual__2024-07-16T06:50:12.175552+00:00 [queued]> finished (failed) although the task says it's queued. (Info: None) Was the task killed externally?

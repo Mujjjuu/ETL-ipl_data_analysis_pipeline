@@ -1,0 +1,25 @@
+[2024-07-16T07:47:58.519+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-16T07:47:58.535+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: glue_crawler_etl_pipeline.wait_for_crawler manual__2024-07-16T07:45:02.025969+00:00 [queued]>
+[2024-07-16T07:47:58.543+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: glue_crawler_etl_pipeline.wait_for_crawler manual__2024-07-16T07:45:02.025969+00:00 [queued]>
+[2024-07-16T07:47:58.544+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-07-16T07:47:58.555+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueCrawlerSensor): wait_for_crawler> on 2024-07-16 07:45:02.025969+00:00
+[2024-07-16T07:47:58.563+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=2859) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-16T07:47:58.564+0000] {standard_task_runner.py:63} INFO - Started process 2860 to run task
+[2024-07-16T07:47:58.564+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'glue_crawler_etl_pipeline', 'wait_for_crawler', 'manual__2024-07-16T07:45:02.025969+00:00', '--job-id', '293', '--raw', '--subdir', 'DAGS_FOLDER/etl_populate_database.py', '--cfg-path', '/tmp/tmp76uwqb8x']
+[2024-07-16T07:47:58.565+0000] {standard_task_runner.py:91} INFO - Job 293: Subtask wait_for_crawler
+[2024-07-16T07:47:58.604+0000] {task_command.py:426} INFO - Running <TaskInstance: glue_crawler_etl_pipeline.wait_for_crawler manual__2024-07-16T07:45:02.025969+00:00 [running]> on host 0ec6e6e2bd09
+[2024-07-16T07:47:58.675+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='your_email@example.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='glue_crawler_etl_pipeline' AIRFLOW_CTX_TASK_ID='wait_for_crawler' AIRFLOW_CTX_EXECUTION_DATE='2024-07-16T07:45:02.025969+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-07-16T07:45:02.025969+00:00'
+[2024-07-16T07:47:58.676+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-16T07:47:58.689+0000] {glue_crawler.py:61} INFO - Poking for AWS Glue crawler: IplJsonCrawler
+[2024-07-16T07:47:58.698+0000] {base.py:84} INFO - Using connection ID 's3-bucket-conn' for task execution.
+[2024-07-16T07:47:58.698+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='s3-bucket-conn', conn_type='aws') credentials retrieved from login and password.
+[2024-07-16T07:47:59.313+0000] {glue_crawler.py:64} INFO - State: READY
+[2024-07-16T07:47:59.382+0000] {glue_crawler.py:67} INFO - Status: SUCCEEDED
+[2024-07-16T07:47:59.383+0000] {base.py:294} INFO - Success criteria met. Exiting.
+[2024-07-16T07:47:59.384+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-16T07:47:59.391+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=glue_crawler_etl_pipeline, task_id=wait_for_crawler, run_id=manual__2024-07-16T07:45:02.025969+00:00, execution_date=20240716T074502, start_date=20240716T074758, end_date=20240716T074759
+[2024-07-16T07:47:59.421+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-07-16T07:47:59.449+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-07-16T07:47:59.451+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

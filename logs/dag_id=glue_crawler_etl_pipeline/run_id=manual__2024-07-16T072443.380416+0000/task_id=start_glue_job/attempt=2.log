@@ -1,0 +1,209 @@
+[2024-07-16T07:32:52.947+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-16T07:32:52.968+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: glue_crawler_etl_pipeline.start_glue_job manual__2024-07-16T07:24:43.380416+00:00 [queued]>
+[2024-07-16T07:32:52.977+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: glue_crawler_etl_pipeline.start_glue_job manual__2024-07-16T07:24:43.380416+00:00 [queued]>
+[2024-07-16T07:32:52.978+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-07-16T07:32:52.991+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): start_glue_job> on 2024-07-16 07:24:43.380416+00:00
+[2024-07-16T07:32:52.996+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=2658) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-16T07:32:52.997+0000] {standard_task_runner.py:63} INFO - Started process 2659 to run task
+[2024-07-16T07:32:52.997+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'glue_crawler_etl_pipeline', 'start_glue_job', 'manual__2024-07-16T07:24:43.380416+00:00', '--job-id', '287', '--raw', '--subdir', 'DAGS_FOLDER/etl_populate_database.py', '--cfg-path', '/tmp/tmpxlba1pdm']
+[2024-07-16T07:32:52.999+0000] {standard_task_runner.py:91} INFO - Job 287: Subtask start_glue_job
+[2024-07-16T07:32:53.041+0000] {task_command.py:426} INFO - Running <TaskInstance: glue_crawler_etl_pipeline.start_glue_job manual__2024-07-16T07:24:43.380416+00:00 [running]> on host 0ec6e6e2bd09
+[2024-07-16T07:32:53.123+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='your_email@example.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='glue_crawler_etl_pipeline' AIRFLOW_CTX_TASK_ID='start_glue_job' AIRFLOW_CTX_EXECUTION_DATE='2024-07-16T07:24:43.380416+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-07-16T07:24:43.380416+00:00'
+[2024-07-16T07:32:53.124+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-16T07:32:53.228+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-16T07:32:53.229+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/etl_populate_database.py", line 65, in start_glue_job
+    response = client.start_job_run(JobName=job_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 565, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 1001, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 1027, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/endpoint.py", line 134, in create_request
+    self._event_emitter.emit(
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+               ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/signers.py", line 105, in handler
+    return self.sign(operation_name, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/signers.py", line 199, in sign
+    auth.add_auth(request)
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/auth.py", line 418, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+[2024-07-16T07:32:53.242+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=glue_crawler_etl_pipeline, task_id=start_glue_job, run_id=manual__2024-07-16T07:24:43.380416+00:00, execution_date=20240716T072443, start_date=20240716T073252, end_date=20240716T073253
+[2024-07-16T07:32:53.265+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/email.py:154: RemovedInAirflow3Warning: Fetching SMTP credentials from configuration variables will be deprecated in a future release. Please set credentials using a connection instead.
+  send_mime_email(e_from=mail_from, e_to=recipients, mime_msg=msg, conn_id=conn_id, dryrun=dryrun)
+
+[2024-07-16T07:32:53.266+0000] {configuration.py:1050} WARNING - section/key [smtp/smtp_user] not found in config
+[2024-07-16T07:32:53.267+0000] {email.py:271} INFO - Email alerting: attempt 1
+[2024-07-16T07:32:53.273+0000] {configuration.py:1050} WARNING - section/key [smtp/smtp_user] not found in config
+[2024-07-16T07:32:53.273+0000] {email.py:271} INFO - Email alerting: attempt 1
+[2024-07-16T07:32:53.274+0000] {taskinstance.py:879} ERROR - Failed to send email to: ['your_email@example.com']
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2479, in _run_raw_task
+    self._execute_task_with_callbacks(context, test_mode, session=session)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2676, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2701, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/etl_populate_database.py", line 65, in start_glue_job
+    response = client.start_job_run(JobName=job_name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 565, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 1001, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/client.py", line 1027, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/endpoint.py", line 134, in create_request
+    self._event_emitter.emit(
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+               ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/signers.py", line 105, in handler
+    return self.sign(operation_name, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/signers.py", line 199, in sign
+    auth.add_auth(request)
+  File "/home/airflow/.local/lib/python3.12/site-packages/botocore/auth.py", line 418, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 1063, in _email_alert
+    send_email(task.email, subject, html_content)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 80, in send_email
+    return backend(
+           ^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 154, in send_email_smtp
+    send_mime_email(e_from=mail_from, e_to=recipients, mime_msg=msg, conn_id=conn_id, dryrun=dryrun)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 273, in send_mime_email
+    smtp_conn = _get_smtp_connection(smtp_host, smtp_port, smtp_timeout, smtp_ssl)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 317, in _get_smtp_connection
+    return smtplib.SMTP(host=host, port=port, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/socket.py", line 853, in create_connection
+    raise exceptions[0]
+  File "/usr/local/lib/python3.12/socket.py", line 838, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 877, in _handle_failure
+    task_instance.email_alert(error, failure_context["task"])
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3163, in email_alert
+    _email_alert(task_instance=self, exception=exception, task=task)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 1065, in _email_alert
+    send_email(task.email, subject, html_content_err)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 80, in send_email
+    return backend(
+           ^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 154, in send_email_smtp
+    send_mime_email(e_from=mail_from, e_to=recipients, mime_msg=msg, conn_id=conn_id, dryrun=dryrun)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 273, in send_mime_email
+    smtp_conn = _get_smtp_connection(smtp_host, smtp_port, smtp_timeout, smtp_ssl)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/email.py", line 317, in _get_smtp_connection
+    return smtplib.SMTP(host=host, port=port, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/smtplib.py", line 255, in __init__
+    (code, msg) = self.connect(host, port)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/smtplib.py", line 341, in connect
+    self.sock = self._get_socket(host, port, self.timeout)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/smtplib.py", line 312, in _get_socket
+    return socket.create_connection((host, port), timeout,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/socket.py", line 853, in create_connection
+    raise exceptions[0]
+  File "/usr/local/lib/python3.12/socket.py", line 838, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+[2024-07-16T07:32:53.288+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 287 for task start_glue_job (Unable to locate credentials; 2659)
+[2024-07-16T07:32:53.332+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-16T07:32:53.352+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-16T07:32:53.356+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

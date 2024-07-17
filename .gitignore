@@ -10,4 +10,4 @@ myenv/
 # Ignore Python cache files
 dags/__pycache__/
 
-logs/scheduler/latest/
+logs/

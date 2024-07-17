@@ -1,0 +1,34 @@
+[2024-07-16T07:45:03.281+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-16T07:45:03.298+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: glue_crawler_etl_pipeline.start_glue_crawler manual__2024-07-16T07:45:02.025969+00:00 [queued]>
+[2024-07-16T07:45:03.305+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: glue_crawler_etl_pipeline.start_glue_crawler manual__2024-07-16T07:45:02.025969+00:00 [queued]>
+[2024-07-16T07:45:03.305+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-07-16T07:45:03.319+0000] {taskinstance.py:2330} INFO - Executing <Task(GlueCrawlerOperator): start_glue_crawler> on 2024-07-16 07:45:02.025969+00:00
+[2024-07-16T07:45:03.323+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=2820) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-07-16T07:45:03.325+0000] {standard_task_runner.py:63} INFO - Started process 2821 to run task
+[2024-07-16T07:45:03.325+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'glue_crawler_etl_pipeline', 'start_glue_crawler', 'manual__2024-07-16T07:45:02.025969+00:00', '--job-id', '291', '--raw', '--subdir', 'DAGS_FOLDER/etl_populate_database.py', '--cfg-path', '/tmp/tmp1azni5y3']
+[2024-07-16T07:45:03.326+0000] {standard_task_runner.py:91} INFO - Job 291: Subtask start_glue_crawler
+[2024-07-16T07:45:03.365+0000] {task_command.py:426} INFO - Running <TaskInstance: glue_crawler_etl_pipeline.start_glue_crawler manual__2024-07-16T07:45:02.025969+00:00 [running]> on host 0ec6e6e2bd09
+[2024-07-16T07:45:03.441+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='your_email@example.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='glue_crawler_etl_pipeline' AIRFLOW_CTX_TASK_ID='start_glue_crawler' AIRFLOW_CTX_EXECUTION_DATE='2024-07-16T07:45:02.025969+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-07-16T07:45:02.025969+00:00'
+[2024-07-16T07:45:03.443+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-16T07:45:03.457+0000] {glue_crawler.py:57} INFO - Checking if crawler already exists: IplJsonCrawler
+[2024-07-16T07:45:03.467+0000] {base.py:84} INFO - Using connection ID 's3-bucket-conn' for task execution.
+[2024-07-16T07:45:03.468+0000] {connection_wrapper.py:384} INFO - AWS Connection (conn_id='s3-bucket-conn', conn_type='aws') credentials retrieved from login and password.
+[2024-07-16T07:45:04.205+0000] {glue_crawler.py:100} INFO - Updating crawler: IplJsonCrawler
+[2024-07-16T07:45:04.411+0000] {glue_crawler.py:102} INFO - Updated configurations: {'Role': 'arn:aws:iam::590183781257:role/service-role/AWSGlueServiceRole-crawler', 'Targets': {'S3Targets': [{'Path': 's3://ipl-json-file/'}]}}
+[2024-07-16T07:45:04.412+0000] {glue_crawler.py:98} INFO - Triggering AWS Glue Crawler
+[2024-07-16T07:45:04.412+0000] {glue_crawler.py:170} INFO - Starting crawler IplJsonCrawler
+[2024-07-16T07:45:04.686+0000] {glue_crawler.py:110} INFO - Waiting for AWS Glue Crawler
+[2024-07-16T07:47:56.842+0000] {glue_crawler.py:185} INFO - crawler_config: {'Name': 'IplJsonCrawler', 'Role': 'service-role/AWSGlueServiceRole-crawler', 'Targets': {'S3Targets': [{'Path': 's3://ipl-json-file/', 'Exclusions': []}], 'JdbcTargets': [], 'MongoDBTargets': [], 'DynamoDBTargets': [], 'CatalogTargets': [], 'DeltaTargets': [], 'IcebergTargets': [], 'HudiTargets': []}, 'DatabaseName': 'ipldatabasejson', 'Classifiers': [], 'RecrawlPolicy': {'RecrawlBehavior': 'CRAWL_EVERYTHING'}, 'SchemaChangePolicy': {'UpdateBehavior': 'UPDATE_IN_DATABASE', 'DeleteBehavior': 'DEPRECATE_IN_DATABASE'}, 'LineageConfiguration': {'CrawlerLineageSettings': 'DISABLE'}, 'State': 'READY', 'TablePrefix': 'json', 'CrawlElapsedTime': 0, 'CreationTime': datetime.datetime(2024, 7, 14, 2, 59, 56, tzinfo=tzlocal()), 'LastUpdated': datetime.datetime(2024, 7, 16, 7, 45, 4, tzinfo=tzlocal()), 'LastCrawl': {'Status': 'SUCCEEDED', 'LogGroup': '/aws-glue/crawlers', 'LogStream': 'IplJsonCrawler', 'MessagePrefix': '2eb7a127-efa6-44bc-a25b-05a4082ab4b2', 'StartTime': datetime.datetime(2024, 7, 16, 7, 45, 4, tzinfo=tzlocal())}, 'Version': 8, 'Configuration': '{"Version":1.0,"CreatePartitionIndex":true}', 'LakeFormationConfiguration': {'UseLakeFormationCredentials': False, 'AccountId': ''}}
+[2024-07-16T07:47:56.923+0000] {glue_crawler.py:190} INFO - Status: SUCCEEDED
+[2024-07-16T07:47:56.924+0000] {glue_crawler.py:191} INFO - Last Runtime Duration (seconds): 62.779
+[2024-07-16T07:47:56.924+0000] {glue_crawler.py:192} INFO - Median Runtime Duration (seconds): 65.3915
+[2024-07-16T07:47:56.925+0000] {glue_crawler.py:193} INFO - Tables Created: 0
+[2024-07-16T07:47:56.925+0000] {glue_crawler.py:194} INFO - Tables Updated: 1
+[2024-07-16T07:47:56.926+0000] {glue_crawler.py:195} INFO - Tables Deleted: 0
+[2024-07-16T07:47:56.926+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-16T07:47:56.948+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=glue_crawler_etl_pipeline, task_id=start_glue_crawler, run_id=manual__2024-07-16T07:45:02.025969+00:00, execution_date=20240716T074502, start_date=20240716T074503, end_date=20240716T074756
+[2024-07-16T07:47:56.995+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-07-16T07:47:57.017+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-07-16T07:47:57.018+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
