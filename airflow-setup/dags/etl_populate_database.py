@@ -41,27 +41,27 @@ def get_aws_credentials(aws_conn_id):
 start_glue_crawler = GlueCrawlerOperator(
     task_id='start_glue_crawler',
     config={
-        "Name": "IplJsonCrawler",
-        "Role": "arn:aws:iam::590183781257:role/service-role/AWSGlueServiceRole-crawler",
-        "DatabaseName": "ipldatabasejson",
-        "Targets": {"S3Targets": [{"Path": "s3://ipl-json-file/"}]},
+        "Name": "#########",
+        "Role": "################################################",
+        "DatabaseName": "############",
+        "Targets": {"S3Targets": [{"Path": "s3://########/"}]},
     },
-    aws_conn_id='s3-bucket-conn', 
+    aws_conn_id='#########', 
     region_name='us-east-2',
     dag=dag,
 )
 
 wait_for_crawler = GlueCrawlerSensor(
     task_id='wait_for_crawler',
-    crawler_name='IplJsonCrawler',
+    crawler_name='#######',
     poke_interval=60,
     timeout=600,
-    aws_conn_id='s3-bucket-conn',
+    aws_conn_id='##########',
     dag=dag,
 )
 
 def start_glue_job():
-    aws_credentials = get_aws_credentials('s3-bucket-conn')
+    aws_credentials = get_aws_credentials('###########')
     client = boto3.client(
         'glue',
         aws_access_key_id=aws_credentials['aws_access_key_id'],
@@ -75,8 +75,8 @@ def start_glue_job():
             response = client.start_job_run(
                 JobName=job_name,
                 Arguments={
-                    '--scriptLocation': 's3://aws-glue-assets-590183781257-us-east-2/scripts/etl_s3_to_redshift.py',
-                    '--TempDir': 's3://ipl-glue-temp/'
+                    '--scriptLocation': 's3://$$$$$$$$$$$$$$$$$$$$$$$$$$///',
+                    '--TempDir': 's3://$$$$$$$$$$$$$$$$$$///'
                 }
             )
             return response['JobRunId']
