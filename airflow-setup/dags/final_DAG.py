@@ -42,7 +42,7 @@ def get_aws_credentials(aws_conn_id):
     }
 
 def identify_new_files(**kwargs):
-    aws_credentials = get_aws_credentials('aws-default')
+    aws_credentials = get_aws_credentials('##########')
     s3_client = boto3.client(
         's3',
         aws_access_key_id=aws_credentials['aws_access_key_id'],
@@ -56,8 +56,8 @@ def identify_new_files(**kwargs):
         region_name=aws_credentials['region_name']
     )
     table = dynamodb.Table('ProcessedFiles') 
-    bucket_name = 'ipl-json-file'
-    prefix = 's3://ipl-json-file/'
+    bucket_name = '##############'
+    prefix = 's3:####################'
     response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=prefix)
     new_files = []
     for content in response.get('Contents', []):
@@ -74,7 +74,7 @@ def identify_new_files(**kwargs):
 
 
 def update_crawled_status(**context):
-    aws_credentials = get_aws_credentials('aws-default')
+    aws_credentials = get_aws_credentials('############')
     dynamodb = boto3.resource(
         'dynamodb',
         aws_access_key_id=aws_credentials['aws_access_key_id'],
@@ -117,7 +117,7 @@ invoke_lambda_task = LambdaInvokeFunctionOperator(
     task_id='invoke_lambda_unzip',
     function_name='processNewZipFile',  
     payload="{{ task_instance.xcom_pull(task_ids='prepare_payload') }}",
-    aws_conn_id='aws-default',  
+    aws_conn_id='#############',  
     region_name='us-east-2', 
     dag=dag,
 )
@@ -143,7 +143,7 @@ def start_glue_crawler_for_new_files(**context):
 
         new_files_prefixes = set([file.rsplit('/', 1)[0] for file in new_files])
 
-        aws_credentials = get_aws_credentials('aws-default')
+        aws_credentials = get_aws_credentials('###############')
         glue_client = boto3.client(
             'glue',
             aws_access_key_id=aws_credentials['aws_access_key_id'],
@@ -153,7 +153,7 @@ def start_glue_crawler_for_new_files(**context):
         for prefix in new_files_prefixes:
             logging.info(f"Starting crawler for prefix: {prefix}")
             response = glue_client.start_crawler(
-                Name="IplJsonCrawler",
+                Name="$#########",
                 Targets={"S3Targets": [{"Path": f"s3://{prefix}/"}]}
             )
             logging.info(f"Started crawler for prefix: {prefix} with response: {response}")
@@ -169,7 +169,7 @@ start_glue_crawler_task = PythonOperator(
 )
 wait_for_crawler = GlueCrawlerSensor(
     task_id='wait_for_crawler',
-    crawler_name='IplJsonCrawler',
+    crawler_name='###############',
     poke_interval=60,
     timeout=600,
     aws_conn_id='aws-default',
@@ -179,18 +179,18 @@ wait_for_crawler = GlueCrawlerSensor(
 compare_schema = GlueJobOperator(
     task_id='compare_schema',
     job_name='schema_comparision',
-    script_location='s3://aws-glue-assets-590183781257-us-east-2/scripts/schema_comparision.py',
-    s3_bucket='ipl-json-file',
+    script_location='#################################',
+    s3_bucket='##################',
     region_name='us-east-2',
     script_args={
-        '--CATALOG_ID': '590183781257',
-        '--DB_NAME': 'ipldatabasejson',
-        '--TABLE_NAME': 'jsonipl_json_file',
-        '--TOPIC_ARN': 'arn:aws:sns:us-east-2:590183781257:Schema-change',
+        '--CATALOG_ID': '################',
+        '--DB_NAME': '#%%%%%%%%%%%%%%',
+        '--TABLE_NAME': '#################',
+        '--TOPIC_ARN': '##############################',
         '--DELETE_OLD_VERSIONS': 'true',
         '--NUM_VERSIONS_TO_RETAIN': '5'
     },
-    aws_conn_id='aws-default',
+    aws_conn_id='#############',
     dag=dag,
 )
 
@@ -218,8 +218,8 @@ def start_glue_job():
             response = client.start_job_run(
                 JobName=job_name,
                 Arguments={
-                    '--scriptLocation': 's3://aws-glue-assets-590183781257-us-east-2/scripts/etl_s3_to_redshift.py',
-                    '--TempDir': 's3://ipl-glue-temp/'
+                    '--scriptLocation': 's3://##################################',
+                    '--TempDir': 's3:###########################'
                 }
             )
             return response['JobRunId']
@@ -230,7 +230,7 @@ def start_glue_job():
     raise Exception("Failed to start Glue job after multiple attempts due to ConcurrentRunsExceededException.")
 
 def start_transform_job():
-    aws_credentials = get_aws_credentials('aws-default')
+    aws_credentials = get_aws_credentials('a##################')
     client = boto3.client(
         'glue',
         aws_access_key_id=aws_credentials['aws_access_key_id'],
@@ -244,8 +244,8 @@ def start_transform_job():
             response = client.start_job_run(
                 JobName=job_name,
                 Arguments={
-                    '--scriptLocation': 's3://aws-glue-assets-590183781257-us-east-2/scripts/transformation_job.py',
-                    '--TempDir': 's3://ipl-glue-temp/'
+                    '--scriptLocation': '################################',
+                    '--TempDir': '##############################'
                 }
             )
             job_run_id = response['JobRunId']
@@ -267,8 +267,8 @@ def update_dynamodb_transformed_status(**context):
     if not new_files:
         logging.info("No new files to update for transformed status.")
         return  
-    dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
-    table = dynamodb.Table('ProcessedFiles')
+    dynamodb = boto3.resource('dynamodb', region_name='##################')
+    table = dynamodb.Table('####################')
     with table.batch_writer() as batch:
         for file in new_files:
             base_file_key = file.rsplit('.', 1)[0]  
@@ -336,7 +336,7 @@ wait_for_etl_glue_job = GlueJobSensor(
     run_id="{{ task_instance.xcom_pull(task_ids='start_glue_job') }}",
     poke_interval=60,
     timeout=3600,
-    aws_conn_id='aws-default',
+    aws_conn_id='#####################33',
     dag=dag,
 )
 update_loaded_task = PythonOperator(
