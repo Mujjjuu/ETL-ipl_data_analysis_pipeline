@@ -2,13 +2,13 @@
 myenv/
 
 # Ignore environment variables
-.env/
+airflow-setup/.env/
 
 # Ignore logs
 .logs/
 
 # Ignore Python cache files
-dags/__pycache__/
+airflow-setup/dags/__pycache__/
 
-logs/
+airflow-setup/logs/
 

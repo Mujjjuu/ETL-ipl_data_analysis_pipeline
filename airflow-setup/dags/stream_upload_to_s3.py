@@ -7,7 +7,6 @@ import requests
 import logging
 import json
 
-# Default arguments for the DAG
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -17,12 +16,11 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-# Define the DAG
 dag = DAG(
     'upload_and_invoke_lambda',
     default_args=default_args,
     description='Download IPL zip file, upload to S3, and invoke Lambda to process it',
-    schedule_interval=timedelta(days=1),
+    schedule_interval=None,  
     start_date=datetime(2023, 1, 1),
     catchup=False,
 )
@@ -31,16 +29,31 @@ def download_and_upload_to_s3(**kwargs):
     url = "https://cricsheet.org/downloads/ipl_json.zip" 
     bucket_name = 'ipl-data-analysis-zipfile'  
     s3_key = 'ipl_matches.zip'
+    processed_files_key = 'processed_files.json'
     
     s3_hook = S3Hook(aws_conn_id='s3-bucket-conn') 
     s3_client = s3_hook.get_conn()
+
+    processed_files = {}
+    try:
+        processed_files_obj = s3_client.get_object(Bucket=bucket_name, Key=processed_files_key)
+        processed_files = json.loads(processed_files_obj['Body'].read().decode('utf-8'))
+    except s3_client.exceptions.NoSuchKey:
+        logging.info("Processed files list does not exist. Creating a new one.")
+
+    if s3_key in processed_files:
+        logging.info(f"{s3_key} is already processed. Skipping upload.")
+        return
 
     try:
         with requests.get(url, stream=True) as response:
             response.raise_for_status()
             s3_client.upload_fileobj(response.raw, bucket_name, s3_key)
         logging.info(f"Streamed file from {url} to s3://{bucket_name}/{s3_key}")
-        # Push the s3_key to XCom
+
+        processed_files[s3_key] = datetime.now().isoformat()
+        s3_client.put_object(Bucket=bucket_name, Key=processed_files_key, Body=json.dumps(processed_files))
+
         kwargs['ti'].xcom_push(key='s3_key', value=s3_key)
     except Exception as e:
         logging.error(f"Failed to stream file to S3: {e}")
@@ -51,10 +64,6 @@ def prepare_payload(**kwargs):
     payload = {'s3_key': s3_key}
     return json.dumps(payload)
 
-
-
-
-# Task to download and upload the IPL zip file to S3
 upload_task = PythonOperator(
     task_id='download_and_upload_to_s3',
     python_callable=download_and_upload_to_s3,
@@ -62,7 +71,7 @@ upload_task = PythonOperator(
     dag=dag,
 )
 
-# Task to prepare the payload for the Lambda function
+
 prepare_payload_task = PythonOperator(
     task_id='prepare_payload',
     python_callable=prepare_payload,
@@ -70,7 +79,6 @@ prepare_payload_task = PythonOperator(
     dag=dag,
 )
 
-# Task to invoke the Lambda function to process the zip file
 invoke_lambda_task = LambdaInvokeFunctionOperator(
     task_id='invoke_lambda_unzip',
     function_name='airflow-lamda-unzip',  
@@ -80,5 +88,4 @@ invoke_lambda_task = LambdaInvokeFunctionOperator(
     dag=dag,
 )
 
-# Set task dependencies
 upload_task >> prepare_payload_task >> invoke_lambda_task

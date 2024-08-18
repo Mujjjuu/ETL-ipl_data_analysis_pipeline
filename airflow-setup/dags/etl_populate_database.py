@@ -11,7 +11,6 @@ import time
 from airflow.hooks.base import BaseHook
 from airflow.operators.python_operator import PythonOperator
 
-# Default arguments for the DAG
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -22,7 +21,6 @@ default_args = {
     'email': ['your_email@example.com']
 }
 
-# Define the DAG
 dag = DAG(
     'glue_crawler_etl_pipeline',
     default_args=default_args,
@@ -32,7 +30,6 @@ dag = DAG(
     catchup=False,
 )
 
-# Get AWS connection credentials from Airflow
 def get_aws_credentials(aws_conn_id):
     connection = BaseHook.get_connection(aws_conn_id)
     return {
@@ -41,7 +38,6 @@ def get_aws_credentials(aws_conn_id):
         'region_name': connection.extra_dejson.get('region_name', 'us-east-2')
     }
 
-# Task to start Glue Crawler
 start_glue_crawler = GlueCrawlerOperator(
     task_id='start_glue_crawler',
     config={
@@ -50,12 +46,11 @@ start_glue_crawler = GlueCrawlerOperator(
         "DatabaseName": "ipldatabasejson",
         "Targets": {"S3Targets": [{"Path": "s3://ipl-json-file/"}]},
     },
-    aws_conn_id='s3-bucket-conn',  # Ensure you have this connection in Airflow
+    aws_conn_id='s3-bucket-conn', 
     region_name='us-east-2',
     dag=dag,
 )
 
-# Sensor to wait for Glue Crawler completion
 wait_for_crawler = GlueCrawlerSensor(
     task_id='wait_for_crawler',
     crawler_name='IplJsonCrawler',
@@ -65,7 +60,6 @@ wait_for_crawler = GlueCrawlerSensor(
     dag=dag,
 )
 
-# Task to start Glue Job with retry mechanism
 def start_glue_job():
     aws_credentials = get_aws_credentials('s3-bucket-conn')
     client = boto3.client(
@@ -98,10 +92,9 @@ start_glue_job_task = PythonOperator(
     dag=dag,
 )
 
-# Sensor to wait for Glue Job completion
 wait_for_glue_job = GlueJobSensor(
     task_id='wait_for_glue_job',
-    job_name='etl_s3_to_redshift',  # Ensure this matches your Glue job name
+    job_name='etl_s3_to_redshift', 
     run_id="{{ task_instance.xcom_pull(task_ids='start_glue_job') }}",
     poke_interval=60,
     timeout=3600,
@@ -109,5 +102,4 @@ wait_for_glue_job = GlueJobSensor(
     dag=dag,
 )
 
-# Define the task dependencies
 start_glue_crawler >> wait_for_crawler >> start_glue_job_task >> wait_for_glue_job

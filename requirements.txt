@@ -17,3 +17,5 @@ apache-airflow[amazon]
 apache-airflow-providers-amazon 
 boto3
 requests 
+
+pyspark
